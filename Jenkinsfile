@@ -44,6 +44,7 @@ pipeline {
 	*/
 	stage('Deploy to CH2') {
       steps {
+	   sh 'mvn clean compile -U'
         sh 'mvn clean deploy -DmuleDeploy'
       }
     }
