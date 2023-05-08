@@ -12,7 +12,18 @@
 
 	<profiles>
 		<profile>
-			<id>nexus</id>
+			<id>nexus-snapshot</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<repo-id>LocalNexusRepo</repo-id>
+				<repo-name>mule-sec-ops-release</repo-name>
+				<repo-url>http://localhost:8081/repository/mule-sec-ops-MIXED/</repo-url>
+			</properties>
+		</profile>
+		<profile>
+			<id>nexus-release</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
