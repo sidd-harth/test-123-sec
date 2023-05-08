@@ -31,13 +31,13 @@ pipeline {
 
     stage('Push Artefact to Exchange') {
       steps {
-        sh 'mvn clean deploy -Pexchange '
+        sh 'mvn clean deploy -Pexchange'
       }
     }
 	
 	    stage('Push Artefact to Nexus') {
       steps {
-        sh 'mvn clean deploy -Pnexus'
+        sh 'mvn clean deploy -Pnexus-snapshot'
       }
     }
 	
