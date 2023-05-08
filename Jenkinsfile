@@ -29,6 +29,7 @@ pipeline {
        }
       } 
     }
+*/
 
     stage('Push Artefact to Exchange') {
       steps {
@@ -36,6 +37,7 @@ pipeline {
       }
     }
 	
+	  /* 
 	    stage('Push Artefact to Nexus') {
       steps {
         sh 'mvn clean deploy -Pnexus-snapshot'
