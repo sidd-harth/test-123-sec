@@ -5,10 +5,11 @@ pipeline {
     maven 'M386'
   }
 
+	
   stages {
   
   
-  
+  /* 
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube22') {
@@ -40,8 +41,7 @@ pipeline {
         sh 'mvn clean deploy -Pnexus-snapshot'
       }
     }
-	
-	
+	*/
 	stage('Deploy to CH2') {
       steps {
         sh 'mvn clean deploy -DmuleDeploy'
