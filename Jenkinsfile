@@ -9,7 +9,7 @@ pipeline {
   stages {
   
   
-  /* 
+ 
     stage('SonarQube Analysis') {
       steps {
         withSonarQubeEnv('SonarQube22') {
@@ -29,7 +29,7 @@ pipeline {
        }
       } 
     }
-*/
+
 
     stage('Push Artefact to Exchange') {
       steps {
@@ -37,16 +37,15 @@ pipeline {
       }
     }
 	
-	  /* 
+	  
 	    stage('Push Artefact to Nexus') {
       steps {
         sh 'mvn clean deploy -Pnexus-snapshot'
       }
     }
-	*/
+	
 	stage('Deploy to CH2') {
       steps {
-	   sh 'mvn clean compile -U'
         sh 'mvn clean deploy -DmuleDeploy'
       }
     }
