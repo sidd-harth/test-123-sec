@@ -8,7 +8,13 @@ pipeline {
 	
   stages {
   
+      stage('Build and Verify') {
+      steps {
+      
+        sh 'mvn clean verify'
   
+    }
+    }
  
     stage('SonarQube Analysis') {
       steps {
