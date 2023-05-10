@@ -9,9 +9,11 @@ pipeline {
 
     stage('Create Release Branch') {
       steps {
-
+         def pom = readMavenPom file: 'pom.xml'
+                    print "POM artifactId: " + pom.artifactId
+                    print "POM version: " + pom.version
         echo "Starting Create Release Branch..."
-        sh "git checkout -b 'release-${POM_VERSION}'"
+        sh "git checkout -b 'release-${pom.version}'"
         // sh "mvn versions:set -DnewVersion='${env.BUILD_VERSION}'"
         sh "git branch"
         echo "Create Release Branch: ${currentBuild.currentResult}"
@@ -20,11 +22,11 @@ pipeline {
 
         success {
 
-          echo "...Create Release Branch Succeeded for 'release-${POM_VERSION}': ${currentBuild.currentResult}"
+          echo "...Create Release Branch Succeeded for 'release-${pom.version}': ${currentBuild.currentResult}"
         }
         unsuccessful {
 
-          echo "...Create Release Branch Failed for 'release-${POM_VERSION}': ${currentBuild.currentResult}"
+          echo "...Create Release Branch Failed for 'release-${pom.version}': ${currentBuild.currentResult}"
         }
       }
     }
