@@ -9,6 +9,7 @@ pipeline {
 
     stage('Create Release Branch') {
       steps {
+        script {
          def pom = readMavenPom file: 'pom.xml'
                     print "POM artifactId: " + pom.artifactId
                     print "POM version: " + pom.version
@@ -17,7 +18,7 @@ pipeline {
         // sh "mvn versions:set -DnewVersion='${env.BUILD_VERSION}'"
         sh "git branch"
         echo "Create Release Branch: ${currentBuild.currentResult}"
-      }
+      }}
       post {
 
         success {
