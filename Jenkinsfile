@@ -4,6 +4,13 @@ pipeline {
   tools {
     maven 'M386'
   }
+   environment {
+        BUILD_VERSION = "build.${currentBuild.number}"
+      //  CLIENT_ID = credentials('anypoint.platform.clientId')
+     //   CLIENT_SECRET = credentials('anypoint.platform.clientSecret')
+     //   ANYPOINT_PLATFORM_CREDS = credentials('anypoint.platform.account')
+     //   ASSET_VERSION = "v1"
+    }
 
   stages {
 
@@ -14,7 +21,7 @@ pipeline {
                     print "POM artifactId: " + pom.artifactId
                     print "POM version: " + pom.version
         echo "Starting Create Release Branch..."
-        sh "git checkout -b 'release-${pom.version}'"
+        sh "git checkout -b 'release-${env.BUILD_VERSION}'"
         // sh "mvn versions:set -DnewVersion='${env.BUILD_VERSION}'"
         sh "git branch"
         echo "Create Release Branch: ${currentBuild.currentResult}"
@@ -23,11 +30,11 @@ pipeline {
 
         success {
 
-          echo "...Create Release Branch Succeeded for 'release-${pom.version}': ${currentBuild.currentResult}"
+          echo "...Create Release Branch Succeeded for 'release-${env.BUILD_VERSION}': ${currentBuild.currentResult}"
         }
         unsuccessful {
 
-          echo "...Create Release Branch Failed for 'release-${pom.version}': ${currentBuild.currentResult}"
+          echo "...Create Release Branch Failed for 'release-${env.BUILD_VERSION}': ${currentBuild.currentResult}"
         }
       }
     }
@@ -68,17 +75,17 @@ pipeline {
           echo "Starting Push Release Branch..."
           sh "git add pom.xml"
           sh 'git commit -m "Committing Branch"'
-          sh "git push --set-upstream origin 'release-${POM_VERSION}'"
-          echo "Build Successful...branch 'release-${POM_VERSION}' committed"
+          sh "git push --set-upstream origin 'release-${env.BUILD_VERSION}'"
+          echo "Build Successful...branch 'release-${env.BUILD_VERSION}' committed"
         }
 
       }
       post {
         success {
-          echo "...Push Release Branch Succeeded for 'release-${POM_VERSION}': ${currentBuild.currentResult}"
+          echo "...Push Release Branch Succeeded for 'release-${env.BUILD_VERSION}': ${currentBuild.currentResult}"
         }
         unsuccessful {
-          echo "...Push Release Branch Failed for 'release-${POM_VERSION}': ${currentBuild.currentResult}"
+          echo "...Push Release Branch Failed for 'release-${env.BUILD_VERSION}}': ${currentBuild.currentResult}"
         }
       }
     }
