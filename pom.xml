@@ -107,14 +107,41 @@
 					</coverage>
 				</configuration>
 			</plugin>
+
+
+			<plugin>
+			    <groupId>org.owasp</groupId>
+			    <artifactId>dependency-check-maven</artifactId>
+			    <version>6.1.6</version>
+			    <configuration>
+			     <format>ALL</format>
+			     <failBuildOnCVSS>8</failBuildOnCVSS> <!-- fail the build for CVSS greater than or equal to 9 -->
+
+			     <!-- 
+			      use internal mirroring of CVE contents 
+			      Suppress files 
+			      E.g. a company-wide suppression file and local project file 
+			     -->
+			     <!-- 
+			     <cveUrlModified>http://internal-mirror.mycorp.com/nvdcve-1.1-modified.json.gz</cveUrlModified>  
+			                    <cveUrlBase>http://internal-mirror.mycorp.com/nvdcve-1.1-%d.json.gz</cveUrlBase>
+			     <suppressionFiles>               
+			                        <suppressionFile>http://example.org/suppression.xml</suppressionFile>
+			                        <suppressionFile>project-suppression.xml</suppressionFile> 
+			                    </suppressionFiles> 
+			                 -->
+			    </configuration>
+			   </plugin>
 		</plugins>
+
+		
 	</build>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.mule.connectors</groupId>
 			<artifactId>mule-http-connector</artifactId>
-			<version>1.7.1</version>
+			<version>1.7.3</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
@@ -133,7 +160,7 @@
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-apikit-module</artifactId>
-			<version>1.6.1</version>
+			<version>1.8.4</version>
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
