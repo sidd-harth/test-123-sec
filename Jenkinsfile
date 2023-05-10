@@ -19,7 +19,7 @@ pipeline {
         
         echo "Starting Create Release Branch..."
         sh "git checkout -b 'release-${env.BUILD_VERSION}'"
-         sh "mvn versions:set -DnewVersion='${env.BUILD_VERSION}'"
+         sh "mvn versions:set -DnewVersion='release-${env.BUILD_VERSION}'"
         sh "git branch"
         echo "Create Release Branch: ${currentBuild.currentResult}"
       }
