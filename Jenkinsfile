@@ -16,16 +16,13 @@ pipeline {
 
     stage('Create Release Branch') {
       steps {
-        script {
-         def pom = readMavenPom file: 'pom.xml'
-                    print "POM artifactId: " + pom.artifactId
-                    print "POM version: " + pom.version
+        
         echo "Starting Create Release Branch..."
         sh "git checkout -b 'release-${env.BUILD_VERSION}'"
         // sh "mvn versions:set -DnewVersion='${env.BUILD_VERSION}'"
         sh "git branch"
         echo "Create Release Branch: ${currentBuild.currentResult}"
-      }}
+      }
       post {
 
         success {
@@ -35,6 +32,30 @@ pipeline {
         unsuccessful {
 
           echo "...Create Release Branch Failed for 'release-${env.BUILD_VERSION}': ${currentBuild.currentResult}"
+        }
+      }
+    }
+
+
+        stage('Push Release Branch') {
+
+      steps {
+        script {
+
+          echo "Starting Push Release Branch..."
+          sh "git add pom.xml"
+          sh 'git commit -m "Committing Branch"'
+          sh "git push --set-upstream origin 'release-${env.BUILD_VERSION}'"
+          echo "Build Successful...branch 'release-${env.BUILD_VERSION}' committed"
+        }
+
+      }
+      post {
+        success {
+          echo "...Push Release Branch Succeeded for 'release-${env.BUILD_VERSION}': ${currentBuild.currentResult}"
+        }
+        unsuccessful {
+          echo "...Push Release Branch Failed for 'release-${env.BUILD_VERSION}}': ${currentBuild.currentResult}"
         }
       }
     }
@@ -67,28 +88,7 @@ pipeline {
       }
     }
 
-    stage('Push Release Branch') {
 
-      steps {
-        script {
-
-          echo "Starting Push Release Branch..."
-          sh "git add pom.xml"
-          sh 'git commit -m "Committing Branch"'
-          sh "git push --set-upstream origin 'release-${env.BUILD_VERSION}'"
-          echo "Build Successful...branch 'release-${env.BUILD_VERSION}' committed"
-        }
-
-      }
-      post {
-        success {
-          echo "...Push Release Branch Succeeded for 'release-${env.BUILD_VERSION}': ${currentBuild.currentResult}"
-        }
-        unsuccessful {
-          echo "...Push Release Branch Failed for 'release-${env.BUILD_VERSION}}': ${currentBuild.currentResult}"
-        }
-      }
-    }
 
     stage('Push Artefact to Exchange') {
       steps {
